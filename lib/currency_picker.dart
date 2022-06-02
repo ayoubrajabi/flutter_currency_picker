@@ -93,10 +93,10 @@ Widget showCurrencyList({
   bool showCurrencyCode = true,
   ScrollPhysics? physics,
   CurrencyPickerThemeData? theme,
-  Widget? textFieldPrefixIcon,
+  Widget? textFieldSuffixIcon,
 }) {
   return CurrencyListView(
-    prefixIcon: textFieldPrefixIcon,
+    suffixIcon: textFieldSuffixIcon,
     onSelect: onSelect,
     showSearchField: showSearchField,
     searchHint: searchHint,

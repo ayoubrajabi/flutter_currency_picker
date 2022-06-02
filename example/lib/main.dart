@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
         showSearchField: true,
         showCurrencyName: false,
         showCurrencyCode: true,
+        textFieldSuffixIcon: Icon(Icons.search),
         onSelect: (Currency currency) {
           print('Select currency: ${currency.name}');
         },

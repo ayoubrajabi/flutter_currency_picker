@@ -55,7 +55,7 @@ class CurrencyListView extends StatefulWidget {
   /// currency list bottom sheet.
   final CurrencyPickerThemeData? theme;
 
-  final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   final TextDirection textDirection;
 
@@ -72,7 +72,7 @@ class CurrencyListView extends StatefulWidget {
     this.physics,
     this.controller,
     this.theme,
-    this.prefixIcon,
+    this.suffixIcon,
     this.textDirection = TextDirection.rtl,
   }) : super(key: key);
 
@@ -123,7 +123,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const SizedBox(height: 12),
+        const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: widget.showSearchField
@@ -131,11 +131,23 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                   controller: _searchController,
                   decoration: InputDecoration(
                     hintText: widget.searchHint ?? "Search",
-                    prefixIcon: widget.prefixIcon,
+                    suffixIcon: widget.suffixIcon,
+                    isDense: true,
+                    isCollapsed: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 12,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
                       borderSide: BorderSide(
-                        color: const Color(0xFF8C98A8).withOpacity(0.1),
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
                       ),
                     ),
                   ),
@@ -151,9 +163,15 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                 ..._favoriteList!
                     .map<Widget>((currency) => _listRow(currency))
                     .toList(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Divider(thickness: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 7.0,
+                  ),
+                  child: Divider(
+                    thickness: 1,
+                    color: Colors.grey.shade200,
+                  ),
                 ),
               ],
               ..._filteredList
@@ -182,7 +200,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
           Navigator.pop(context);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           child: Row(
             textDirection: widget.textDirection,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,10 +236,13 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   currency.symbol,
-                  style: const TextStyle(fontSize: 18),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -237,13 +258,13 @@ class _CurrencyListViewState extends State<CurrencyListView> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade200,
           ),
         ),
         child: Image.asset(
           'no_flag.png'.imagePath,
           package: 'currency_picker',
-          width: 27,
+          width: 20,
         ),
       );
     }
@@ -252,15 +273,15 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.grey.shade300,
+          color: Colors.grey.shade200,
         ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
           CurrencyUtils.currencyToEmoji(currency),
-          style: TextStyle(
-            fontSize: widget.theme?.flagSize ?? 25,
+          style: const TextStyle(
+            fontSize: 20,
           ),
         ),
       ),
@@ -283,7 +304,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     setState(() => _filteredList = _searchResult);
   }
 
-  TextStyle get _defaultTitleTextStyle => const TextStyle(fontSize: 17);
+  TextStyle get _defaultTitleTextStyle => const TextStyle(fontSize: 15);
   TextStyle get _defaultSubtitleTextStyle =>
-      TextStyle(fontSize: 15, color: Theme.of(context).hintColor);
+      TextStyle(fontSize: 13, color: Theme.of(context).hintColor);
 }
