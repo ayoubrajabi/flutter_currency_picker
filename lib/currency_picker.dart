@@ -1,5 +1,6 @@
 library currency_picker;
 
+import 'package:currency_picker/src/currency_list_view.dart';
 import 'package:flutter/material.dart';
 
 import 'src/currency.dart';
@@ -55,7 +56,7 @@ void showCurrencyPicker({
   currency_list.showCurrencyListBottomSheet(
     context: context,
     onSelect: onSelect,
-    showSearchField:showSearchField,
+    showSearchField: showSearchField,
     searchHint: searchHint,
     showFlag: showFlag,
     showCurrencyName: showCurrencyName,
@@ -78,5 +79,33 @@ void showCurrencyListBottomSheet({
   showCurrencyPicker(
     context: context,
     onSelect: onSelect,
+  );
+}
+
+Widget showCurrencyList({
+  required ValueChanged<Currency> onSelect,
+  List<String>? favorite,
+  List<String>? currencyFilter,
+  String? searchHint,
+  bool showSearchField = true,
+  bool showFlag = true,
+  bool showCurrencyName = true,
+  bool showCurrencyCode = true,
+  ScrollPhysics? physics,
+  CurrencyPickerThemeData? theme,
+  Widget? textFieldPrefixIcon,
+}) {
+  return CurrencyListView(
+    prefixIcon: textFieldPrefixIcon,
+    onSelect: onSelect,
+    showSearchField: showSearchField,
+    searchHint: searchHint,
+    showFlag: showFlag,
+    showCurrencyName: showCurrencyName,
+    showCurrencyCode: showCurrencyCode,
+    favorite: favorite,
+    currencyFilter: currencyFilter,
+    theme: theme,
+    physics: physics,
   );
 }

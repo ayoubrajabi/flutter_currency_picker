@@ -1365,4 +1365,17 @@ List<Map<String, dynamic>> currencies = [
     "space_between_amount_and_symbol": true,
     "symbol_on_left": true,
   },
+  {
+    "code": "IRR",
+    "name": "Iran Rial",
+    "symbol": "ریال",
+    "flag": "IRR",
+    "decimal_digits": 0,
+    "number": 886,
+    "name_plural": "Iranian rials",
+    "thousands_separator": ",",
+    "decimal_separator": ".",
+    "space_between_amount_and_symbol": true,
+    "symbol_on_left": true,
+  },
 ];

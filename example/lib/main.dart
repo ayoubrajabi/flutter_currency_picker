@@ -22,24 +22,34 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Demo for currency picker')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            showCurrencyPicker(
-              context: context,
-              showFlag: true,
-              showSearchField: true,
-              showCurrencyName: true,
-              showCurrencyCode: true,
-              onSelect: (Currency currency) {
-                print('Select currency: ${currency.name}');
-              },
-              favorite: ['SEK'],
-            );
-          },
-          child: const Text('Show currency picker'),
-        ),
+      body: showCurrencyList(
+        showFlag: true,
+        physics: const BouncingScrollPhysics(),
+        showSearchField: true,
+        showCurrencyName: false,
+        showCurrencyCode: true,
+        onSelect: (Currency currency) {
+          print('Select currency: ${currency.name}');
+        },
+        favorite: ['IRR', 'USD', 'EUR'],
       ),
+      // body: Center(
+      //   child: ElevatedButton(
+      //     onPressed: () {
+      //       showCurrencyList(
+      //         showFlag: true,
+      //         showSearchField: true,
+      //         showCurrencyName: true,
+      //         showCurrencyCode: true,
+      //         onSelect: (Currency currency) {
+      //           print('Select currency: ${currency.name}');
+      //         },
+      //         favorite: ['IRR', 'USD', 'EUR'],
+      //       );
+      //     },
+      //     child: const Text('Show currency picker'),
+      //   ),
+      // ),
     );
   }
 }

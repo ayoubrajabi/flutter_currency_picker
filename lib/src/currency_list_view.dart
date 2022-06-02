@@ -55,6 +55,10 @@ class CurrencyListView extends StatefulWidget {
   /// currency list bottom sheet.
   final CurrencyPickerThemeData? theme;
 
+  final Widget? prefixIcon;
+
+  final TextDirection textDirection;
+
   const CurrencyListView({
     Key? key,
     required this.onSelect,
@@ -68,6 +72,8 @@ class CurrencyListView extends StatefulWidget {
     this.physics,
     this.controller,
     this.theme,
+    this.prefixIcon,
+    this.textDirection = TextDirection.rtl,
   }) : super(key: key);
 
   @override
@@ -119,17 +125,17 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       children: <Widget>[
         const SizedBox(height: 12),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: widget.showSearchField
               ? TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    labelText: widget.searchHint ?? "Search",
                     hintText: widget.searchHint ?? "Search",
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: widget.prefixIcon,
                     border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
                       borderSide: BorderSide(
-                        color: const Color(0xFF8C98A8).withOpacity(0.2),
+                        color: const Color(0xFF8C98A8).withOpacity(0.1),
                       ),
                     ),
                   ),
@@ -176,38 +182,37 @@ class _CurrencyListViewState extends State<CurrencyListView> {
           Navigator.pop(context);
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
           child: Row(
+            textDirection: widget.textDirection,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
                 child: Row(
+                  textDirection: widget.textDirection,
                   children: [
-                    const SizedBox(width: 15),
                     if (widget.showFlag) ...[
                       _flagWidget(currency),
                       const SizedBox(width: 15),
                     ],
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.showCurrencyCode) ...[
-                            Text(
-                              currency.code,
-                              style: _titleTextStyle,
-                            ),
-                          ],
-                          if (widget.showCurrencyName) ...[
-                            Text(
-                              currency.name,
-                              style: widget.showCurrencyCode
-                                  ? _subtitleTextStyle
-                                  : _titleTextStyle,
-                            ),
-                          ]
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.showCurrencyCode) ...[
+                          Text(
+                            currency.code,
+                            style: _titleTextStyle,
+                          ),
                         ],
-                      ),
+                        if (widget.showCurrencyName) ...[
+                          Text(
+                            currency.name,
+                            style: widget.showCurrencyCode
+                                ? _subtitleTextStyle
+                                : _titleTextStyle,
+                          ),
+                        ]
+                      ],
                     ),
                   ],
                 ),
@@ -228,17 +233,36 @@ class _CurrencyListViewState extends State<CurrencyListView> {
 
   Widget _flagWidget(Currency currency) {
     if (currency.flag == null) {
-      return Image.asset(
-        'no_flag.png'.imagePath,
-        package: 'currency_picker',
-        width: 27,
+      return Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.grey.shade300,
+          ),
+        ),
+        child: Image.asset(
+          'no_flag.png'.imagePath,
+          package: 'currency_picker',
+          width: 27,
+        ),
       );
     }
 
-    return Text(
-      CurrencyUtils.currencyToEmoji(currency),
-      style: TextStyle(
-        fontSize: widget.theme?.flagSize ?? 25,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.grey.shade300,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          CurrencyUtils.currencyToEmoji(currency),
+          style: TextStyle(
+            fontSize: widget.theme?.flagSize ?? 25,
+          ),
+        ),
       ),
     );
   }
